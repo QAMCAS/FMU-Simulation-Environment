@@ -1,0 +1,23 @@
+{   
+    "server": "http://localhost:82/",
+    "fmu": "application/model/heat_controller.fmu",
+
+    "config": 
+    {
+        "output":[
+            "heater_sw"
+        ],
+        "timestep": 0.1,
+
+        "init_input":
+        {
+            "upper_limit":20,
+            "lower_limit":10
+        },
+        "charts_active": true,
+        "chart_time_window":500
+    },
+    "input":
+    [
+    ]
+}

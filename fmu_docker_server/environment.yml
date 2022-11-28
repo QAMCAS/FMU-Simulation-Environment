@@ -1,0 +1,8 @@
+name: fmu_simulator_docker
+dependencies:
+  - python=3.8
+  - flask=2.0.3
+  - werkzeug=2.0.3
+  - python-engineio=3.13.2
+  - python-socketio=4.6.0
+  - pandas

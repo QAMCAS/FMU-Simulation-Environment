@@ -1,0 +1,50 @@
+{   
+    "server": "http://localhost:81/",
+    "fmu": "application/model/heat_model.fmu",
+
+    "config": 
+    {
+        "output":[
+            "T",
+            "heater_sw",
+            "T_amb"
+        ],
+        "timestep": 0.1,
+
+        "init_input":
+        {
+            "T_amb":0,
+            "Q_max":80.0,
+            "heater_sw":true,
+            "c":4,
+            "h":3
+        },
+        "charts_active": true,
+        "chart_time_window":500
+    },
+
+    "input":
+    [
+        {
+            "time":8.0,
+            "T_amb":-1
+        },
+        {
+            "time":8.5,
+            "T_amb":-2
+        },
+        {
+            "time":9.0,
+            "T_amb":-3
+        },
+        {
+            "time":9.5,
+            "T_amb":-4
+        },
+        {
+            "time":10.0,
+            "T_amb":-5
+        }
+    ]
+}
+

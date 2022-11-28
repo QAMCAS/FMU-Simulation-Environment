@@ -1,0 +1,106 @@
+[
+      {
+            "0.01": {
+                  "application/model/two_lamp_model/two_lamps_example_orig.pl": [
+                        {
+                              "model status": "model satisfied",
+                              "diag time": 0.004761219024658203,
+                              "fault size": 0,
+                              "diag found": 1,
+                              "diag": [
+                                    []
+                              ],
+                              "observation": [
+                                    "val(light(l1),off).",
+                                    "val(light(l2),off).",
+                                    "off(s)."
+                              ]
+                        }
+                  ]
+            }
+      },
+      {
+            "0.06": {
+                  "application/model/two_lamp_model/two_lamps_example_orig.pl": [
+                        {
+                              "model status": "model satisfied",
+                              "diag time": 0.0032100677490234375,
+                              "fault size": 0,
+                              "diag found": 1,
+                              "diag": [
+                                    []
+                              ],
+                              "observation": [
+                                    "val(light(l1),on).",
+                                    "val(light(l2),on).",
+                                    "on(s)."
+                              ]
+                        }
+                  ]
+            }
+      },
+      {
+            "0.2": {
+                  "application/model/two_lamp_model/two_lamps_example_orig.pl": [
+                        {
+                              "model status": "model satisfied",
+                              "diag time": 0.00439906120300293,
+                              "fault size": 1,
+                              "diag found": 1,
+                              "diag": [
+                                    [
+                                          "ab(l1)"
+                                    ]
+                              ],
+                              "observation": [
+                                    "val(light(l1),off).",
+                                    "val(light(l2),on).",
+                                    "on(s)."
+                              ]
+                        }
+                  ]
+            }
+      },
+      {
+            "0.3": {
+                  "application/model/two_lamp_model/two_lamps_example_orig.pl": [
+                        {
+                              "model status": "model satisfied",
+                              "diag time": 0.005167961120605469,
+                              "fault size": 1,
+                              "diag found": 2,
+                              "diag": [
+                                    [
+                                          "ab(s)"
+                                    ],
+                                    [
+                                          "ab(b)"
+                                    ]
+                              ],
+                              "observation": [
+                                    "val(light(l1),off).",
+                                    "val(light(l2),off).",
+                                    "on(s)."
+                              ]
+                        },
+                        {
+                              "model status": "model satisfied",
+                              "diag time": 0.0038700103759765625,
+                              "fault size": 2,
+                              "diag found": 1,
+                              "diag": [
+                                    [
+                                          "ab(l1)",
+                                          "ab(l2)"
+                                    ]
+                              ],
+                              "observation": [
+                                    "val(light(l1),off).",
+                                    "val(light(l2),off).",
+                                    "on(s)."
+                              ]
+                        }
+                  ]
+            }
+      }
+]

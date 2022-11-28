@@ -1,0 +1,11 @@
+name: fmu_sim
+channels:
+  - conda-forge
+  - anaconda
+dependencies:
+  - python=3.8
+  - matplotlib
+  - numpy
+  - requests
+  - pip:
+    - -e .

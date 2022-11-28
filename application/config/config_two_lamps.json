@@ -1,0 +1,51 @@
+{   
+    "server": "http://localhost:81/",
+    "fmu": "application/model/two_lamp_model/two_lamps_model.fmu",
+
+    "config": 
+    {
+        "output":[
+            "sut.bulb1.i",
+            "sut.bulb2.i",
+            "sut.sw.mode",
+            "sut.bat.i"
+        ],
+        "timestep": 0.01,
+
+        "init_input":
+        {
+            "switch_mode":"open",
+            "bulb1_state":"ok",
+            "bulb2_state":"ok",
+            "switch_state":"ok"
+        },
+        "charts_active": true,
+        "chart_time_window":500
+    },
+
+    "input":
+    [
+        {
+            "time":0.05,
+            "switch_mode":"close",
+            "bulb1_state":"ok",
+            "bulb2_state":"ok",
+            "switch_state":"ok"
+        },
+        {
+            "time":0.2,
+            "switch_mode":"close",
+            "bulb1_state":"broken",
+            "bulb2_state":"ok",
+            "switch_state":"ok"
+        },
+        {
+            "time":0.3,
+            "switch_mode":"close",
+            "bulb1_state":"ok",
+            "bulb2_state":"ok",
+            "switch_state":"broken"
+        }
+    ]
+}
+
