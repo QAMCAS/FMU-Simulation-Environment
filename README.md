@@ -3,6 +3,8 @@
 ### Project Acknowledgments: 
 #### AI4DI - Artificial Intelligence for Digitising Industry
 
+<img src="/docu/AI4DI_logo.png" alt="drawing" width="150"/>
+
 The research was supported by ECSEL JU under the project H2020 826060 AI4DI - Artificial Intelligence for Digitising Industry. AI4DI is funded by the Austrian Federal Ministry of Transport, Innovation and Technology (BMVIT) under the program ”ICT of the Future” between May 2019 and April 2022. More information can be retrieved from https://iktderzukunft.at/en/.
 
 ---
