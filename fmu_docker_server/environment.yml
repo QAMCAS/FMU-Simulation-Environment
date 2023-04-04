@@ -1,7 +1,12 @@
 name: fmu_simulator_docker
+channels:
+  - conda-forge
+  - anaconda
+  - pypi
 dependencies:
   - python=3.8
   - flask=2.0.3
+  - pyfmi=2.9.5
   - werkzeug=2.0.3
   - python-engineio=3.13.2
   - python-socketio=4.6.0
