@@ -1,4 +1,5 @@
 import json
+import numpy as np
 # Import the FMU docker interface package for python
 import api_fmu_docker.api_lib as api
 import time
@@ -33,7 +34,7 @@ def main():
     sim_time = 18 # seconds
     
 
-    for i in range(int(round(sim_time / timestep))):
+    for stime in np.arange(0, sim_time, timestep):
         # send update (do next time step) to FMU simulation
         api_model.send_update()
         # getter to store the measured output signals

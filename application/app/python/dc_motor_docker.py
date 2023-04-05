@@ -1,11 +1,11 @@
 import json
-
+import numpy as np
 # Import the FMU docker interface package for python
 import api_fmu_docker.api_lib as api
 
 def main():
     # Configuration file path
-    config_model = 'application/config/config_dc_motor_model.json'
+    config_model = 'application/config/config_dc_motor_model_docker.json'
     
     # Load configuration file
     api_model.init_interface_config_client(config_model)
@@ -26,7 +26,7 @@ def main():
     timestep = api_model.get_timestep()
     sim_time = 0.13 # seconds
 
-    for i in range(int(round(sim_time / timestep))):
+    for stime in np.arange(0, sim_time, timestep):
         # send update (do next time step) to FMU simulation
         api_model.send_update()
         # getter to store the measured output signals

@@ -1,0 +1,77 @@
+{   
+    "server": "http://localhost:81/",
+    "fmu": "application/model/DCMotorCircuit_Testbench_FMU_mac.fmu",
+
+    "config": 
+    {
+        "output":[
+            "sut.mot.i",
+            "sut.mot.phi",
+            "sut.mot.omega",
+            "tor_state",
+            "sut.mot.state"
+        ],
+        "timestep": 0.001,
+
+        "init_input":
+        {
+            "bat_state":"ok",
+            "switch_state":"ok",
+            "switch_mode":"close",
+            "rv_state":"ok",
+            "mot_state":"ok",
+            "tor_state":"ok"
+        },
+        "charts_active": true,
+        "chart_time_window":500
+    },
+
+    "input":
+    [
+        {
+            "time":0.0,
+            "bat_state":"ok",
+            "switch_state":"ok",
+            "switch_mode":"close",
+            "rv_state":"ok",
+            "mot_state":"ok",
+            "tor_state":"ok"
+        },
+        {
+            "time":0.03,
+            "bat_state":"ok",
+            "switch_state":"ok",
+            "switch_mode":"close",
+            "rv_state":"ok",
+            "mot_state":"ok",
+            "tor_state":"f1"
+        },
+        {
+            "time":0.05,
+            "bat_state":"ok",
+            "switch_state":"ok",
+            "switch_mode":"close",
+            "rv_state":"ok",
+            "mot_state":"f1",
+            "tor_state":"ok"
+        },
+        {
+            "time":0.08,
+            "bat_state":"ok",
+            "switch_state":"ok",
+            "switch_mode":"close",
+            "rv_state":"ok",
+            "mot_state":"f2",
+            "tor_state":"f1"
+        },
+        {
+            "time":0.1,
+            "bat_state":"ok",
+            "switch_state":"ok",
+            "switch_mode":"close",
+            "rv_state":"ok",
+            "mot_state":"ok",
+            "tor_state":"ok"
+        }
+    ]
+}

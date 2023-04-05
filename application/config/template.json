@@ -1,0 +1,27 @@
+{   
+    "server": "http://localhost/",
+    "fmu": "/application/model/example.fmu",
+
+    "config": 
+    {
+        "output":[
+            "variable_name"
+        ],
+        "timestep": "integer",
+
+        "init_states":
+        {
+            "variable_name":"value/state"
+        },
+        "charts_active": "boolean",
+        "chart_time_window":"integer"
+    },
+
+    "states":
+    [
+        {
+            "time":"integer",
+            "variable_name":"value/state"
+        }
+    ]
+}

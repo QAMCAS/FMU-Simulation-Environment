@@ -14,7 +14,7 @@ setup(
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
         scripts=['api_fmu_docker/api_lib.py'],
-        packages=find_packages(include=['api_fmu_docker', 'api_fmu_docker.*']),
+        packages=find_packages(include=['api_fmu_docker', 'api_fmu_docker.*', 'simulation_local', 'simulation_local.*']),
         install_requires=[], # add any additional packages that 
         # needs to be installed along with your package. Eg: 'caer'
         

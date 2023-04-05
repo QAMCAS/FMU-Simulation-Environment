@@ -10,7 +10,7 @@ ENV FLASK_RUN_HOST=0.0.0.0
 #ENV FLASK_ENV=development
 
 COPY environment.yml ./
-RUN conda update -n base -c defaults conda
+#RUN conda update -n base -c defaults conda
 RUN conda env create -f environment.yml
 
 ENV PATH /opt/conda/envs/$conda_env/bin:$PATH

@@ -6,6 +6,7 @@ import sys
 import logging
 import logging.config
 import os
+import simulation_local.simulation_local as simulation
 
 logger = logging.getLogger(__name__)
 class API_FMU_Docker:
@@ -153,7 +154,7 @@ class API_FMU_Docker:
         except:
             logger.error(self.name+": error in loading configuration file from server ("+str(server)+")")
             sys.exit(1)
-        
+
     def __set_config(self, config):
         self.config = config
     
@@ -267,3 +268,272 @@ class API_FMU_Docker:
         except:
             logger.error(self.name+": unable to get FMU file from server.")
             return
+    
+class API_FMU_Local:
+    def __init__(self, name = ""):
+        self.name = name
+        self.cnt = 0
+        self.varnames = ""
+        self.inputs = ""
+        self.input_config = ""
+        
+        #super().__init__()
+        self.__set_logger__()
+        self.__init_simulator_object()
+
+    def __init_simulator_object(self):
+        self.sim = simulation.Simulation()
+
+    def __set_logger__(self):
+        log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        dir_name = os.path.dirname(sys.argv[0])
+        dir_name = os.path.dirname(os.path.abspath(__file__))
+        logging.basicConfig(filename=dir_name+'/api_lib.log', filemode='w', level=logging.INFO, format=log_format)
+        
+    # Send a update request to Docker FMU model server
+    def send_update(self):
+        try:
+            logger.info("update: try to set predefined inputs from configuration file if available for actual timestep.")
+            self.set_input(self.get_input_commands(self.sim.get_time()))
+        except:
+            logger.error("update: failed to set predefined inputs from configuration file.")
+        
+        try:
+            logger.info(self.name+": send update request (local)")
+            self.sim.update()
+        except:
+            logger.error(self.name+": error when trying to send update request to server (local)")
+
+    # Send a reset request to Docker FMU model server
+    def send_reset(self):
+        try:
+            logger.info(self.name+": send reset request to server ("+str(self.server)+")")
+            self.sim.reset()
+        except:
+            logger.error(self.name+": error when trying to send reset request to server (local)")
+
+    # Send updated FMU model inputs to Docker FMU model server
+    def set_input(self, input):
+        # send a JSON/dict input change
+        try:
+            logger.info(self.name+": set new input values on server ("+str(self.server)+"): "+str(input))
+            self.sim.set_input(input)
+        except:
+            logger.error(self.name+": error when trying to set new inputs on server.")
+
+    def generate_input_message(self, name, value):
+        input_dict = {name:value}
+        return input_dict
+    
+    def set_interface_server(self, server):
+        logger.info(self.name+": manually net new server address: "+str(server))
+        self.server = server
+
+    def get_output(self):
+        try:
+            output = self.sim.get_output()
+            logger.info(self.name+": get actual output values from server (local): "+str(output))
+            return output
+        except:
+            logger.error(self.name+": unable to get output values from server (local)")
+            return
+    
+    def get_output_names(self):
+        try:
+            logger.info(self.name+": get configured output variable names from server (local)")
+            return self.output
+        except:
+            logger.error(self.name+": error when trying to get configured output variable names from server (local)")
+    
+    def get_server_config(self, server):
+        try:
+            r = requests.get(server+'config')
+            config = r.text
+            if config != "CONFIGERR":
+                return config
+            else:
+                logger.error(self.name+": no configuration found on server.")
+        except:
+            logger.error(self.name+": unable to get configuration data.")
+            return
+    
+    def get_all_variable_names(self):
+        try:
+            # load config file
+            varnames = self.sim.get_variable_names()
+            
+            logger.info(self.name+": get all available variable names from FMU model.")
+            return varnames
+        except:
+            logger.error(self.name+": unable to get model variable names! Load configuration file.")
+            sys.exit(1)
+    
+    def get_actual_inputs(self):
+        try:
+            input = self.sim.get_input()
+            
+            logger.info(self.name+": get actual set inputs used in FMU model.")
+            return input
+        except:
+            logger.error(self.name+": unable to get actual set inputs of FMU model.")
+    
+    def get_config_inputs(self):
+        try:
+            config = self.__get_config()
+            logger.info(self.name+": get set inputs as configured in configuration file from server.")
+            return config['input']
+        except:
+            logger.error(self.name+": unable to get configured inputs from server.")
+            sys.exit(1)
+
+    def get_timestep(self):
+        try: 
+            timestep = self.sim.get_timestep()
+            logger.info(self.name+": get set timestep information from server.")
+            return timestep
+        except:
+            logger.error(self.name+": unable to get set timestep information from server (simulation time steps).")
+            sys.exit(1)
+    
+    def init_interface_config_client(self, config_path):
+        logger.info(self.name+": try to load configuration file from client. config path: "+str(config_path))
+        try:
+            with open(config_path) as config_json:
+                config = json.load(config_json)
+            config_json.close()
+        except:
+            logger.error(self.name+": error in opening configuration file.")
+            sys.exit(1)
+        try:
+            self.__init_api_config(config)
+        except:
+            logger.error(self.name+": error in init of api configuration.")
+            sys.exit(1)
+        try:
+            self.__set_config(config)
+        except:
+            logger.error(self.name+": error in setting the configuration file.")
+            sys.exit(1)
+        
+        logger.info(self.name+": configuration file loaded and API interface is initiated.")
+        
+    def __set_config(self, config):
+        self.config = config
+    
+    def __get_config(self):
+        return self.config
+    
+    def __init_api_config(self, config):
+        logger.info(self.name+": validity check of loaded configuration file.")
+        try:
+            # extract FMU path information
+            self.fmu = config['fmu']
+            logger.info(self.name+": configured FMU file: "+str(self.fmu))
+        except:
+            logger.error(self.name+": specification error for FMU information.")
+            logger.info(self.name+": example: "+json.dumps({"fmu":"path to FMU model"},indent=4))
+            sys.exit(1)
+            
+        try:
+            # extract server information
+            self.server = config['server']
+            logger.info(self.name+": configured server: "+self.server)
+        except:
+            logger.error(self.name+": specification error for server information.")
+            logger.info(self.name+": example: "+json.dumps({"server":"http://localhost:80/"},indent=4))
+            sys.exit(1)
+                                   
+        try:
+            # extract output information for drawing and data storage
+            output = config['config']['output']
+            self.output = output.copy()
+
+            logger.info(self.name+": configured output: "+json.dumps(self.output,indent=4))
+        except:
+            logger.error(self.name+": specification error for output information.")
+            logger.info(self.name+": example: "+json.dumps({"output":["x", "y", "z"]},indent=4))
+            sys.exit(1)
+        
+        try:
+            # extract predefined input information
+            init_input_config = config['config']['init_input']
+            self.init_input_config = init_input_config.copy()
+            logger.info(self.name+": configured init input information: "+json.dumps(self.init_input_config,indent=4))
+        except:
+            logger.error(self.name+": specification error for init input information.")
+            logger.info(self.name+": example: "+json.dumps({"input":[{"time":10, "x_input":"ok", "y_input":"ok"}]},indent=4))
+            sys.exit(1)
+
+        try:
+            # extract predefined input information
+            input_config = config['input']
+            self.input_config = input_config.copy()
+            logger.info(self.name+": configured predefined input information: "+json.dumps(self.input_config,indent=4))
+        except:
+            logger.error(self.name+": specification error for predefined input information.")
+            logger.info(self.name+": example: "+json.dumps({"input":[{"time":10, "x_input":"ok", "y_input":"ok"}]},indent=4))
+            sys.exit(1)
+        
+        try:
+            if len(self.input_config) > 0:
+                for config_check in config['input']:
+                    if type(config_check['time']) != float:
+                        raise ValueError()
+        except ValueError:
+            logger.error(self.name+": specification error for predefined input information.")
+            logger.info(self.name+": example: "+json.dumps({"input":[{"time":10, "x_input":"ok", "y_input":"ok"}]},indent=4))
+            sys.exit(1)
+                        
+        try:
+            # extract simulation timestep
+            self.timestep = config['config']['timestep']
+            if self.timestep > 0.0:
+                pass
+            logger.info(self.name+": configured timestep information: "+str(self.timestep))
+        except:
+            logger.error(self.name+": specification error for timestep information.")
+            logger.info(self.name+": example: "+json.dumps({"timestep":0.1},indent=4))
+            sys.exit(1)
+            
+    def upload_config(self):
+        logger.info(self.name+": try to upload configuration file to server.")
+        try:
+            # load config file
+            self.sim.set_dataset_output(self.output)
+            self.sim.set_timestep(self.timestep)
+            self.sim.init_input(self.init_input_config)
+
+            logger.info(self.name+": configuration uploaded to local simulation environment.")
+        except:
+            logger.error(self.name+": error when trying to upload config to server.")
+                
+    def upload_fmu(self, fmu_path=""):
+        logger.info(self.name+": try to upload FMU file to server.")
+        
+        if fmu_path == "":
+            fmu = self.fmu
+        else:
+            fmu = fmu_path
+                
+        try:
+            self.sim.init_fmu(fmu)
+        except:
+            logger.error(self.name+": error when loading FMU file on local simulation environment.")
+    
+    def get_input_commands(self,time):
+        try:
+            tol = 0.01
+            commands = list()
+            input = self.sim.get_input()
+            for msg in self.input_config: 
+                commands.append(msg)
+
+            for cmd in commands:
+                if abs(time - cmd['time']) < tol:
+                    input = cmd
+            
+            logger.info(self.name+": check for config predefined simulation input commands to update.")
+            return input
+        except:
+            logger.error(self.name+": error when trying to check for config predefined simulation input commands.")
+            return "get_input_commands error"

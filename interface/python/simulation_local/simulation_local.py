@@ -8,6 +8,7 @@ class Simulation:
         self.timestep = 0.001
         self.datamap = dict()
         self.input = dict()
+        self.input_init = dict()
 
         self.time = 0.0
         self.dataset_out = []
@@ -49,6 +50,7 @@ class Simulation:
         self.model.reset()
         self.time = 0.0
         self.model.initialize()
+        self.init_input(self.input_init)
         self.datamap = dict()
 
     def set_dataset_output(self, data):
@@ -63,7 +65,7 @@ class Simulation:
                 if key != "time":
                     self.model.set(key, val)
                     self.input.update({key:val})
-            self.model.initialize()
+                    self.input_init.update({key:val})
         except:
             print("no init input set")
   
@@ -91,6 +93,7 @@ class Simulation:
     def get_output(self):
         data_dict = dict()
         data = self.model.get(self.dataset_out)
+
         data_dict.update({'time' : {"value":self.time, "unit":"sec"}})
         for i in range(len(self.dataset_out)):
             try:
