@@ -4,7 +4,7 @@
                   "application/model/two_lamp_model/two_lamps_example_orig.pl": [
                         {
                               "model status": "model satisfied",
-                              "diag time": 0.004761219024658203,
+                              "diag time": 0.0038840770721435547,
                               "fault size": 0,
                               "diag found": 1,
                               "diag": [
@@ -24,7 +24,7 @@
                   "application/model/two_lamp_model/two_lamps_example_orig.pl": [
                         {
                               "model status": "model satisfied",
-                              "diag time": 0.0032100677490234375,
+                              "diag time": 0.003938198089599609,
                               "fault size": 0,
                               "diag found": 1,
                               "diag": [
@@ -44,7 +44,7 @@
                   "application/model/two_lamp_model/two_lamps_example_orig.pl": [
                         {
                               "model status": "model satisfied",
-                              "diag time": 0.00439906120300293,
+                              "diag time": 0.0015151500701904297,
                               "fault size": 1,
                               "diag found": 1,
                               "diag": [
@@ -66,7 +66,7 @@
                   "application/model/two_lamp_model/two_lamps_example_orig.pl": [
                         {
                               "model status": "model satisfied",
-                              "diag time": 0.005167961120605469,
+                              "diag time": 0.0016210079193115234,
                               "fault size": 1,
                               "diag found": 2,
                               "diag": [
@@ -85,7 +85,7 @@
                         },
                         {
                               "model status": "model satisfied",
-                              "diag time": 0.0038700103759765625,
+                              "diag time": 0.0014157295227050781,
                               "fault size": 2,
                               "diag found": 1,
                               "diag": [

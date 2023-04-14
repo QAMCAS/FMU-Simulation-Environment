@@ -6,8 +6,8 @@
     {
         "output":[
             "T",
-            "heater_sw",
-            "T_amb"
+            "T_amb",
+            "heater_sw"
         ],
         "timestep": 0.1,
 
