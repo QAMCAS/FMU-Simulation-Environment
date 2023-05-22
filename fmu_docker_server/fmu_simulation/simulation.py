@@ -63,7 +63,7 @@ class Simulation:
                 if key != "time":
                     self.model.set(key, val)
                     self.input.update({key:val})
-            self.model.initialize()
+            #self.model.initialize()
         except:
             print("no init input set")
   
