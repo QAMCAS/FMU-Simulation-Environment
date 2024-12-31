@@ -22,7 +22,7 @@ For the purpose of enabling the simulation environment of reading and interactin
 Since the target of the application is to use a trigger to tell the FMU to step forward a given time, it is essential that the FMU is generated as a CS (CO-Simulation) model. With a CS FMU the numeric solver is embedded in the model and allows a step-by-step simulation to read the outputs and set new inputs after each timestep. 
 Since the application is introduced as a full working client-server system, a Python and Java library interface is developed to enable the client easy access to the REST API communication. Therefore, the interface library provides different methods in Python and Java to load, send, set and get information to/from the simulator server.
 
-![FMU simulation client server environment](/docu/client_server_new.png "FMU simulation client server environment")
+![FMU simulation client server environment](/docu/client_server_.png "FMU simulation client server environment")
 
 # Environment Setup
 The follwoing sections describe the setup process to build the Docker simulation environment related to different operating systems as MAC OS, Linux or Windows.
