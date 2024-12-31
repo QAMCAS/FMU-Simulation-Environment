@@ -24,6 +24,8 @@ Since the application is introduced as a full working client-server system, a Py
 
 ![FMU simulation client server environment](/docu/client_server_.png "FMU simulation client server environment")
 
+A presentation with an example is provided here: docu/FMU_Simulation_Environment_Cyber_Physical_Systems_CoDesign_and_ASP_Diagnose_Tool.pdf and docu/FMU_Simulation_Environment_Cyber_Physical_Systems_CoDesign.pdf
+
 # Environment Setup
 The following sections describe the setup process to build the Docker simulation environment related to different operating systems such as MAC OS, Linux, or Windows.
 
